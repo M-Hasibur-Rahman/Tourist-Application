@@ -22,7 +22,7 @@ $(document).ready(function () {
   var logop = L.control({position: 'topleft'});
   logop.onAdd = function(map){
       var div = L.DomUtil.create('div', 'infop');
-      div.innerHTML= "<strong>Search your Hotel Location</strong>";
+      div.innerHTML= "<strong>Search your Hotel Location:</strong>";
       return div;
       
   }
@@ -69,6 +69,18 @@ $(document).ready(function () {
     var polyline = new L.Polyline([a,pointA, pointB, pointC, pointD,pointE], {
     color: 'red',
     }).addTo(map);
+
+
+    document.getElementById('submitname').onclick = function () {
+        document.getElementById('tname').innerHTML = document.getElementById('travname').value;
+        document.getElementById('phonenumb').innerHTML = document.getElementById('travphone').value;
+        document.getElementById('country').innerHTML = document.getElementById('travcount').value;
+        document.getElementById('budget').innerHTML = document.getElementById('travbudget').value;
+        document.getElementById('durofstay').innerHTML = document.getElementById('durstay').value;
+        document.getElementById('distt').innerHTML = document.getElementById('distance').value;
+        document.getElementById("OutRes").style.display = "block";
+    }
+
 
     function dragStartHandler(e) {
         // Get the polyline's latlngs
@@ -204,8 +216,7 @@ $(document).ready(function () {
         });
     }
 
-
-
+    
 
 });
 
