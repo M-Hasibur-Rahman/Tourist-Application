@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet@2.5.1/dist/esri-leaflet.js"
+        integrity="sha512-q7X96AASUF0hol5Ih7AeZpRF6smJS55lcvy+GLWzJfZN+31/BQ8cgNx2FGF+IQSA4z2jHwB20vml+drmooqzzQ=="
+        crossorigin=""></script>
+
+    <!-- Load Esri Leaflet Geocoder from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+        integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+        crossorigin="">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+        integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+        crossorigin=""></script>
+
+    <!-- Jquery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+        <img src="MicrosoftTeams-image.png" class="logoar">
+        </div>
+    </nav>
+    <section class="container-form">
+        <div class="form-div">
+            <div class="sbmlabel">
+                <h3>Please fill the details below:</h3>
+            </div>
+            <div class="inputfield">
+                <label>*Travellers Name</label>
+                <input type="text" class="input">
+            </div>
+            <div class="inputfield">
+                <label>*Phone Number:</label>
+                <input type="text" class="input">
+            </div>
+            <div class="inputfield">
+                <label>Country flying in from:</label>
+                <input type="text" class="input">
+            </div>
+            <div class="inputfield">
+                <label>Budget:</label>
+                <input type="text" class="input">
+            </div>
+            <div class="inputfield">
+                <label>Duration of stay (days):</label>
+                <input type="text" class="input">
+            </div>
+            <div class="inputfield">
+                <label>Distance:</label>
+                <input type="text" class="input" id="distance">
+            </div>
+            <div>
+                <input type="button" id="submitname" value="Submit" />
+            </div>
+        </div>
+        <div class="map-div">
+            <div id="idmap"></div>
+        </div>
+    </section>
+    <script type="text/javascript" src="script.js"></script>
+
+</body>
+</html>
