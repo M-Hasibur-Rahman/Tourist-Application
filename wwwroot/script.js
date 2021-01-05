@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var markers = [];
+    /*var markers = [];
     var map = L.map('idmap', {
         zoomControl: false
     }).setView([48.8566,2.3522], 13)
@@ -213,10 +213,219 @@ $(document).ready(function () {
                 smoothFactor: 1
             });
             firstpolyline.addTo(map);*/
+        //});
+    //} 
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaGFzaWItOTgiLCJhIjoiY2tqZzFkZGh0MGxlMDJxbzd1dTUxMTg5byJ9.CdfSOIpgLd_dNaGNhaT3aw';
+    var map = new mapboxgl.Map({
+    container: 'idmap',
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    center: [2.3333, 48.8538], // starting position [lng, lat]
+    zoom: 12.5 // starting zoom
+    });
+
+    map.on('load', function () {
+        map.loadImage(
+        'eiffel-tower-icon.png',
+        function (error, image) {
+        if (error) throw error;
+        map.addImage('tourist', image);
+        map.addSource('point', {
+        'type': 'geojson',
+        'data': {
+        'type': 'FeatureCollection',
+        'features': [
+        {
+        'type': 'Feature',
+        'geometry': {
+        'type': 'Point',
+        'coordinates': [0, 0]
+        }
+        }
+        ]
+        }
+        });
+        }
+        );
+        });
+
+        map.on('load', function () {
+            map.loadImage(
+            'free-hotel-icon.png',
+            function (error, image) {
+            if (error) throw error;
+            map.addImage('hotel', image);
+            map.addSource('point', {
+            'type': 'geojson',
+            'data': {
+            'type': 'FeatureCollection',
+            'features': [
+            {
+            'type': 'Feature',
+            'geometry': {
+            'type': 'Point',
+            'coordinates': [0, 0]
+            }
+            }
+            ]
+            }
+            });
+            }
+            );
+            });
+    
+    const apiKey = "5ae2e3f221c38a28845f05b60ba7687b713457966492e3128fa26377";
+    function apiGet(method, query) {
+        return new Promise(function (resolve,reject) {
+            var otmAPI =
+                "https://api.opentripmap.com/0.1/en/places/" +
+                method +
+                "?apikey=" +
+                apiKey;
+            if (query !== undefined) {
+                otmAPI += "&" + query;
+            }
+            fetch(otmAPI)
+                .then(response => response.json())
+                .then(data => resolve(data))
+                .catch(function (err) {
+                    console.log("Fetch Error :-S", err);
+                });
         });
     }
+    map.addControl(new mapboxgl.NavigationControl());
 
-    
+    map.on("load", function () {
 
+        //Stylization
+
+        //Add pois layer to the map - attractions
+        map.addSource("opentripmap.pois", {
+            type: "vector",
+            attribution:
+                '<a href="https://opentripmap.io" target="_blank">© OpenTripMap</a>',
+            bounds: [-180, -85.0511, 180, 85.0511],
+            minzoom: 8,
+            maxzoom: 14,
+            scheme: "xyz",
+            tiles: [
+                "https://api.opentripmap.com/0.1/en/tiles/pois/{z}/{x}/{y}.pbf?kinds=museums&rate=2&apikey=" + apiKey
+            ]
+        });
+        //hotel markers
+        map.addSource("other_hotels", {
+            type: "vector",
+            attribution:
+                '<a href="https://opentripmap.io" target="_blank">© OpenTripMap</a>',
+            bounds: [-180, -85.0511, 180, 85.0511],
+            minzoom: 8,
+            maxzoom: 14,
+            scheme: "xyz",
+            tiles: [
+                "https://api.opentripmap.com/0.1/en/tiles/pois/{z}/{x}/{y}.pbf?kinds=other_hotels&rate=2&apikey=" + apiKey
+            ]
+        });
+        map.addLayer(
+            {
+                id: "opentripmap.pois",
+                type: "symbol",
+                source: "opentripmap.pois",
+                "source-layer": "pois",
+                minzoom: 8,
+                layout: {
+                    'icon-image': 'tourist',
+                    'icon-size': 0.1,
+                    
+                },
+                paint: {
+                    /*"circle-color": "rgb(55,144,144)",
+                    "circle-radius": 5,
+                    "circle-stroke-color": "rgba(102,193,201, 0.6)",
+                    "circle-stroke-width": 0.6*/
+                }
+            },
+            "airport-label"
+        );
+        map.addLayer(
+            {
+                id: "other_hotels",
+                type: "symbol",
+                source: "other_hotels",
+                "source-layer": "pois",
+                minzoom: 8,
+                layout: {
+                    'icon-image': 'hotel',
+                    'icon-size': 0.1,
+                    
+                },
+                paint: {
+                    /*"circle-color": "rgb(40,144,144)",
+                    "circle-radius": 9,
+                    "circle-stroke-color": "rgba(60,193,201, 0.6)",
+                    "circle-stroke-width": 0.8*/
+                }
+            },
+            "airport-label"
+        );
+    });
+
+    function onShowPOI(data, lngLat) {
+        let poi = document.createElement("div");
+        let respanel = document.getElementById("infopanel");
+        poi.innerHTML = "<h2>" + data.name + "<h2>";
+        poi.innerHTML += "<p><i>" + getCategoryName(data.kinds) + "</i></p>";
+        if (data.preview) {
+            poi.innerHTML += "<img src='"+data.preview.source+"'>";
+        }
+        poi.innerHTML += data.wikipedia_extracts
+            ? data.wikipedia_extracts.html
+            : data.info
+                ? data.info.descr
+                : "No description";
+
+        poi.innerHTML += "<p><a target='_blank' href='"+ data.otm + "'>Show more at OpenTripMap</a></p>";
+        respanel.innerHTML = poi.innerHTML;
+        /*new mapboxgl.Popup().setLngLat(lngLat)
+            .setDOMContent(poi)
+            .addTo(map);*/
+    }
+
+    map.on('click', "opentripmap.pois", function (e) {
+        let coordinates = e.features[0].geometry.coordinates.slice();
+        let id = e.features[0].properties.id;
+        //let name = e.features[0].properties.name;
+
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        apiGet("xid/" + id).then(data => onShowPOI(data, e.lngLat));
+    });
+
+    let popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', "opentripmap.pois", function (e) {
+        map.getCanvas().style.cursor = "pointer";
+
+        let coordinates = e.features[0].geometry.coordinates.slice();
+        //let id = e.features[0].properties.id;
+        let name = e.features[0].properties.name;
+
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+
+        popup
+            .setLngLat(coordinates)
+            .setHTML("<strong>" + name + "</strong>")
+            .addTo(map);
+    });
+
+    map.on('mouseleave', "opentripmap.pois", function () {
+        map.getCanvas().style.cursor = "";
+        popup.remove();
+    });
+   
 });
-

@@ -7,7 +7,10 @@
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
     <!-- Load Leaflet from CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -34,21 +37,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />     
+    <script type="text/javascript" src="https://opentripmap.io/js/directory.en.js"></script>
 </head>
 <body>
     <nav>
         <div class="nav-container">
-        <img src="MicrosoftTeams-image.png" class="logoar">
+        <img src="undraw_map_1r69.svg" class="logoar">
         </div>
     </nav>
+    <div class="webinfo">
+        <h3> Visiting Paris? Let us create your touring schedule and give you the full experience of Paris!</h3>
+        </div>        
     <section class="container-form">
         <div class="form-div">
             <div class="sbmlabel">
-                <h3>Please fill the details below:</h3>
+                <h2>Please fill the details below:</h3>
             </div>
             <div class="inputfield">
-                <label>*Travellers Name</label>
+                <label>*Travellers Name(s):</label>
                 <input type="text" class="input" id="travname">
             </div>
             <div class="inputfield">
@@ -60,6 +68,10 @@
                 <input type="text" class="input" id="travcount">
             </div>
             <div class="inputfield">
+                <label>Hotel staying at: <img src="free-hotel-icon.png" alt="hotel" width="25" height="25"></label>
+                <input type="text" class="input" id="hotelstaying">
+            </div>
+            <div class="inputfield">
                 <label>Budget:</label>
                 <input type="text" class="input" id="travbudget">
             </div>
@@ -67,13 +79,15 @@
                 <label>Duration of stay (days):</label>
                 <input type="text" class="input" id="durstay">
             </div>
-            <div class="inputfield">
+            <!--<div class="inputfield">
                 <label>Distance:</label>
                 <input type="text" class="input" id="distance">
+            </div>-->
+            <input type="button" id="submitname" value="Submit" />
+            <div class="paneltips">
+                <h3>Please press <img src="eiffel-tower-icon.png" alt="eiff" width="50" height="50">on map to see details about attraction below:</h3>
             </div>
-            <div>
-                <input type="button" id="submitname" value="Submit" />
-            </div>
+            <div id="infopanel"></div>
         <div id="OutRes">
             <div class="sbmlabel">
                 <h3>Output:</h3>
@@ -91,7 +105,7 @@
                 <div id="country"></div>
             </div>
             <div class="inputfield">
-                <label>Budget:</label>
+                <label>Budget estimate:</label>
                 <div id="budget"></div>
             </div>
             <div class="inputfield">
@@ -104,6 +118,7 @@
             </div>
         </div>
         </div>
+    </div>
         <div class="map-div">
             <div id="idmap"></div>
         </div>
