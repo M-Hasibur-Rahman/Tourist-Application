@@ -201,3 +201,44 @@ div.webinfo h3 {
   text-align: center;
   padding-top: 5px;
 }
+
+
+#list {
+  margin-left:30%;
+  margin-top:30px;
+  
+}
+
+#pointer {
+  margin-top:-15px;
+  margin-left:50%;
+}
+
+#inform {
+  margin-top:-15px;
+  margin-left:30%;
+}
+
+#next_button {
+  margin-left:30%;
+}
+ /*.containerish {
+   margin-left:30%;
+   height: 400px;
+   width: 200px;
+   background-color:white;
+ }*/
+
+ #next_button {
+  width: 10%;
+  height: 20px;
+  margin-top: 30px;
+  margin-left: 30%;
+  border-radius:10px;
+  background:#379683;
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  align-items: center;
+ }
