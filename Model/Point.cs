@@ -1,14 +1,16 @@
-
+using System;
 namespace Points.Models
 {
     public class Point
     {
-        public int ID { get; set;}
-        public decimal Lat { get; set; }
-        public decimal Lng { get; set; }
-
-        public string Info {get; set;}
+        public string TravellerName {get; set;}
+        public int BudgetGiven {get; set;}
+        public int DurOfStay {get; set;}
+        public double Distancecov {get; set;}
     }
 
-
+   public class Coordinates {
+       public double lon {get;set;}
+        public double lat {get;set;}
+   }
 }

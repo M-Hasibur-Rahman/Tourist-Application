@@ -51,13 +51,14 @@
         <h3> Visiting Paris? Let us create your touring schedule and give you the full experience of Paris!</h3>
         </div>        
     <section class="container-form">
+        <form id="formall">
         <div class="form-div">
             <div class="sbmlabel">
                 <h2>Please fill the details below:</h3>
             </div>
             <div class="inputfield">
                 <label>*Travellers Name(s):</label>
-                <input type="text" class="input" id="travname">
+                <input type="text" class="input" id="travname" name="travgivenname" required>
             </div>
             <div class="inputfield">
                 <label>*Phone Number:</label>
@@ -69,15 +70,15 @@
             </div>
             <div class="inputfield">
                 <label>Hotel staying at: <img src="free-hotel-icon.png" alt="hotel" width="25" height="25"></label>
-                <input type="text" class="input" id="hotelstaying">
+                <input type="text" class="input" id="hotelstaying" required>
             </div>
             <div class="inputfield">
-                <label>Budget:</label>
-                <input type="text" class="input" id="travbudget">
+                <label>Budget (in €):</label>
+                <input type="text" class="input" id="travbudget" name="budgetgiven" required>
             </div>
             <div class="inputfield">
                 <label>Duration of stay (days):</label>
-                <input type="text" class="input" id="durstay">
+                <input type="text" class="input" id="durstay" name="durofstaygiven" required>
             </div>
             <!--<div class="inputfield">
                 <label>Distance:</label>
@@ -88,48 +89,18 @@
                 <h3>Please press <img src="eiffel-tower-icon.png" alt="eiff" width="50" height="50">on map to see details about attraction below:</h3>
             </div>
             <div id="infopanel"></div>
-        <div id="OutRes">
-            <div class="sbmlabel">
-                <h3>Output:</h3>
-            </div>
-            <div class="inputfield">
-                <label>*Travellers Name:</label>
-                <div id="tname"></div>
-            </div>
-            <div class="inputfield">
-                <label>*Phone Number:</label>
-                <div id="phonenumb"></div>
-            </div>
-            <div class="inputfield">
-                <label>Country flying in from:</label>
-                <div id="country"></div>
-            </div>
-            <div class="inputfield">
-                <label>Budget estimate:</label>
-                <div id="budget"></div>
-            </div>
-            <div class="inputfield">
-                <label>Duration of stay (days):</label>
-                <div id="durofstay"></div>
-            </div>
-            <div class="inputfield">
-                <label>Distance:</label>
-                <div id="distt"></div>
-            </div>
-        </div>
-        <div id="check"></div>
-        </div>
+            <div id="diste"></div>
     </div>
+    </form>
         <div class="map-div">
             <div id="idmap"></div>
         </div>
     </section>
-    <section class="containerish">
         <div id="inform"></div>
         <div id="list"></div>
         <div id="pointer"></div>
-        </section>
         <input type="button" id="next_button" value="next" />
+        <div id="containerish"></div>
     <script type="text/javascript" src="script.js"></script>
 
 </body>

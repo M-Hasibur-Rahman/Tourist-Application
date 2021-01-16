@@ -1,221 +1,8 @@
 $(document).ready(function () {
-
-    /*var markers = [];
-    var map = L.map('idmap', {
-        zoomControl: false
-    }).setView([48.8566,2.3522], 13)
-
-    map.doubleClickZoom.disable();
-
-    L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=SXOFB5ujKbDrlisGWCgm', {
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-    }).addTo(map);
-
-    var logo = L.control({position: 'topleft'});
-  logo.onAdd = function(map){
-      var div = L.DomUtil.create('div', 'infosecond');
-      div.innerHTML= "<img src='hotel.png' width='50px' height='50px'/>";
-      return div;
-      
-  }
-  logo.addTo(map);
-  var logop = L.control({position: 'topleft'});
-  logop.onAdd = function(map){
-      var div = L.DomUtil.create('div', 'infop');
-      div.innerHTML= "<strong>Search your Hotel Location:</strong>";
-      return div;
-      
-  }
-  logop.addTo(map);
-  const hotelicon = L.icon({
-    iconSize: [20, 40],
-    iconAnchor: [10, 41],
-    popupAnchor: [2, -40],
-    // specify the path here
-    iconUrl: "hotel.png",
-});
-    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
-
-    var results = L.layerGroup().addTo(map);
-  
-    searchControl.on('results', function (data) {
-      results.clearLayers();
-      for (var i = data.results.length - 1; i >= 0; i--) {
-        results.addLayer(L.marker(data.results[i].latlng),{icon:hotelicon});
-      }
-    });
-
-    L.control.zoom({
-        position:'topright'
-   }).addTo(map);
-   
-   var a = new L.LatLng(48.855133, 2.315818);
-   var _firstLatLng = L.marker(a,
-    {
-        draggable: true, // Make the icon dragable
-        title: "Hotel", // Add a title
-        opacity: 1,
-        icon:hotelicon // here assign the markerIcon var
-    }
-    ).addTo(map);
-
-
-    var pointA = new L.LatLng(48.8584, 2.2945);
-    var pointB = new L.LatLng(48.8720, 2.3216);
-    var pointC= new L.LatLng(48.8600,2.3266);
-    var pointD= new L.LatLng(48.8530, 2.3499);
-    var pointE= new L.LatLng(48.8566,2.3522);
-
-    var polyline = new L.Polyline([a,pointA, pointB, pointC, pointD,pointE], {
-    color: 'red',
-    }).addTo(map);
-
-
-    document.getElementById('submitname').onclick = function () {
-        document.getElementById('tname').innerHTML = document.getElementById('travname').value;
-        document.getElementById('phonenumb').innerHTML = document.getElementById('travphone').value;
-        document.getElementById('country').innerHTML = document.getElementById('travcount').value;
-        document.getElementById('budget').innerHTML = document.getElementById('travbudget').value;
-        document.getElementById('durofstay').innerHTML = document.getElementById('durstay').value;
-        document.getElementById('distt').innerHTML = document.getElementById('distance').value;
-        document.getElementById("OutRes").style.display = "block";
-    }
-
-
-    function dragStartHandler(e) {
-        // Get the polyline's latlngs
-        var latlngs = polyline.getLatLngs(),
-
-            // Get the marker's start latlng
-            latlng = this.getLatLng();
-
-        // Iterate the polyline's latlngs
-        for (var i = 0; i < latlngs.length; i++) {
-
-            // Compare each to the marker's latlng
-            if (latlng.equals(latlngs[i])) {
-
-                // If equals store key in marker instance
-                this.polylineLatlng = i;
-            }
-        }
-    }
-    _firstLatLng.on("dragend", function (e) {
-
-        changedP[last_element] = e.target.getLatLng();
-        //this.bindPopup(changedP[last_element].toString()).openPopup();
-    });
-    _firstLatLng
-            .on('dragstart', dragStartHandler)
-            .on('drag', dragHandler)
-            .on('dragend', dragEndHandler);
-
-    function dragHandler(e) {
-        var latlngs = polyline.getLatLngs(),
-            latlng = this.getLatLng();
-        // Replace the old latlng with the new
-        latlngs.splice(this.polylineLatlng, 1, latlng);
-        // Update the polyline with the new latlngs
-        polyline.setLatLngs(latlngs);
-        // calculate distance of current latlngs
-        var dist = 0;
-        for (var i = 1; i < latlngs.length; i++) {
-            dist += map.distance(latlngs[i - 1], latlngs[i]);
-        }
-        document.getElementById('distance').value = dist;
-    }
-
-    function dragEndHandler(e) {
-        delete this.polylineLatlng;
-    }
-
-    //map.on('click', function (e) {
-        //let m = L.marker(e.latlng).on('click', removeMarker).addTo(map);
-        //let marker = L.marker([52.0, 21.0]);
-        //var k = L.marker([53.0, 23.0]);
-        //var popup = L.popup()
-        //.setContent("I am a standalone popup.");
-        //mark[0] = L.marker([48.8584, 2.2945]).bindPopup(popup).addTo(map);
-        let Noterdam = L.marker([48.8530, 2.3499]);
-
-        var eiffelicon = L.icon({
-            iconUrl: 'eiffel-tower-icon.png',
-        
-            iconSize:     [38, 95], // size of the icon
-            shadowSize:   [50, 64], // size of the shadow
-            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
-        let mark2 = L.marker([48.8584, 2.2945], {icon: eiffelicon}).bindTooltip("Eiffel Tower",
-        {
-            permanent: true,
-            direction: 'bottom'
-        }).addTo(map);
-        
-        
-
-        data = {
-            lat: Noterdam.getLatLng().lat,
-            lng: Noterdam.getLatLng().lng   
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "api/points",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                console.log('point posted ' + response);
-                downloadPoints();
-            },
-            error: function(){
-                console.log('uhh ohh');
-            }
-        });
-
-        map.removeLayer(m);
-
-        var pointList = [Noterdam, mark2];
-        var firstpolyline = new L.Polyline(pointList, {
-            color: 'red',
-            weight: 3,
-            opacity: 0.5,
-            smoothFactor: 1
-        });
-        firstpolyline.addTo(map);
-
-    //});
     
-
-    function downloadPoints() {
-        $.getJSON('api/points', function (data) {
-            drawPoints(data);
-        })
-    }
-
-    function drawPoints(data) {
-        markers.forEach(element => {
-            map.removeLayer(element);
-        });
-        
-        data.forEach(element => {
-            let marker = L.marker([element.lat, element.lng]).on('click', function () {}).bindPopup("Place name: " + element.info).addTo(map);
-            markers.push(marker);
-            /*var pointA = new L.LatLng(element.lat, element.lng);
-            var pointB = new L.LatLng((element+1).lng, (element+1).lng);
-            var pointList = [pointA, pointB];
-
-            var firstpolyline = new L.Polyline(pointList, {
-                color: 'red',
-                weight: 3,
-                opacity: 0.5,
-                smoothFactor: 1
-            });
-            firstpolyline.addTo(map);*/
-        //});
-    //} 
-
+    //5. calculate distance using coordinates in the backend and show it in ouput
+    //7. show nearby hotels for eating according to budget 
+    //8. style the output routes
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGFzaWItOTgiLCJhIjoiY2tqZzFkZGh0MGxlMDJxbzd1dTUxMTg5byJ9.CdfSOIpgLd_dNaGNhaT3aw';
     var map = new mapboxgl.Map({
     container: 'idmap',
@@ -224,10 +11,10 @@ $(document).ready(function () {
     zoom: 12.5 // starting zoom
     });
 
-    var examplecoords = [[2.3193, 48.8526],[2.3249, 48.8548],[2.3269,48.8567]];
+   
     var hscoordsdayone = [[2.3193, 48.8526],[2.2945, 48.8584],[2.2986,48.8556],[2.3125,48.8544],[2.3158,48.8553]];
-    var hscoordsdaytwo = [[2.3193, 48.8526],[2.3249, 48.8548],[2.3269,48.8567]];
-    //var hscoords3day = [[2.3193, 48.8526],[2.3249, 48.8548],[2.3269,48.8567]];
+    var hscoordsdaytwo = [[2.3193, 48.8526],[2.3206, 48.8511],[2.3350,48.8523],[2.3226,48.8474],[2.350,48.8459],[2.2945,48.8584],[2.2893,48.8616],[2.2851,48.8592],[2.2876,48.8556]];
+    var hscoordsdaythree = [[2.3193, 48.8526],[2.2945, 48.8584],[2.2986,48.8556],[2.3125,48.8544],[2.3158,48.8553],[2.3206, 48.8511],[2.3350,48.8523],[2.3226,48.8474],[2.350,48.8459],[2.2945,48.8584],[2.2893,48.8616],[2.2851,48.8592],[2.2876,48.8556]];
     map.on('load', function () {
         map.loadImage(
         'eiffel-tower-icon.png',
@@ -280,7 +67,7 @@ $(document).ready(function () {
     
     const apiKey = "5ae2e3f221c38a28845f05b60ba7687b713457966492e3128fa26377";
     function apiGet(method, query) {
-        return new Promise(function (resolve,reject) {
+        return new Promise(function (resolve) {
             var otmAPI =
                 "https://api.opentripmap.com/0.1/en/places/" +
                 method +
@@ -302,17 +89,7 @@ $(document).ready(function () {
     map.on("load", function () {
 
         //Stylization
-        map.addSource('route', {
-            'type': 'geojson',
-            'data': {
-            'type': 'Feature',
-            'properties': {},
-            'geometry': {
-            'type': 'LineString',
-            'coordinates': examplecoords
-            }
-            }
-            });
+        
             map.addSource('hsroutedayone', {
                 'type': 'geojson',
                 'data': {
@@ -324,6 +101,28 @@ $(document).ready(function () {
                 }
                 }
                 });
+                map.addSource('hsroutedaytwo', {
+                    'type': 'geojson',
+                    'data': {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                    'type': 'LineString',
+                    'coordinates': hscoordsdaytwo
+                    }
+                    }
+                    });
+                    map.addSource('hsroutedaythree', {
+                        'type': 'geojson',
+                        'data': {
+                        'type': 'Feature',
+                        'properties': {},
+                        'geometry': {
+                        'type': 'LineString',
+                        'coordinates': hscoordsdaythree
+                        }
+                        }
+                        });
         //Add pois layer to the map - attractions
         map.addSource("opentripmap.pois", {
             type: "vector",
@@ -334,7 +133,7 @@ $(document).ready(function () {
             maxzoom: 14,
             scheme: "xyz",
             tiles: [
-                "https://api.opentripmap.com/0.1/en/tiles/pois/{z}/{x}/{y}.pbf?kinds=museums,towers,castles,bridges,gardens_and_parks&rate=2&apikey=" + apiKey
+                "https://api.opentripmap.com/0.1/en/tiles/pois/{z}/{x}/{y}.pbf?kinds=museums,towers,castles,gardens_and_parks&rate=2&apikey=" + apiKey
             ]
         });
         //hotel markers
@@ -479,95 +278,12 @@ $(document).ready(function () {
     let lon; // place longitude
     let lat; // place latitude
     let radius;
-
+    let imgon;
+    let distt;
     document
       .getElementById("submitname").onclick = function() {
         let name = document.getElementById("hotelstaying").value;
         let stayofday =  document.getElementById("durstay").value;
-        if (name=="hotel de suede saint germain")
-        {
-            lon = 2.3193;
-            lat = 48.8526;
-            //map.add marker
-            //new mapboxgl.marker()
-            //.setLngLat([lon,lat])
-            //.addTo(map);
-              /*  map.loadImage(
-                'free-hotel-icon.png',
-                function (error, image) {
-                if (error) throw error;
-                map.addImage('hotelz', image);
-                map.addSource('pointz', {
-                'type': 'geojson',
-                'data': {
-                'type': 'FeatureCollection',
-                'features': [
-                {
-                'type': 'Feature',
-                'geometry': {
-                'type': 'Point',
-                'coordinates': [lon, lat]
-                }
-                }
-                ]
-                }
-                });
-                }
-                );
-                map.addLayer({
-                    'id': 'points',
-                    'type': 'symbol',
-                    'source': 'pointz',
-                    'layout': {
-                    'icon-image': 'hotelz',
-                    'icon-size': 0.15
-                    }
-                    });*/
-                   
-                    var marker = new mapboxgl.Marker()
-                    .setLngLat([lon, lat])
-                    .addTo(map);
-                
-                if(stayofday==1){
-                    map.addLayer({
-                        'id': 'hsroutedayone',
-                        'type': 'line',
-                        'source': 'hsroutedayone',
-                        'layout': {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                        },
-                        'paint': {
-                        'line-color': '#FF0000',
-                        'line-width': 8
-                        }
-                        });
-                    firstLoad();
-                    radius=500;
-                }
-                else if(stayofday==3){
-                firstLoad();
-                radius=600;
-                    }
-                else if(stayofday==2)
-                {
-                        map.addLayer({
-                            'id': 'route',
-                            'type': 'line',
-                            'source': 'route',
-                            'layout': {
-                            'line-join': 'round',
-                            'line-cap': 'round'
-                            },
-                            'paint': {
-                            'line-color': '#888',
-                            'line-width': 8
-                            }
-                            });
-                        firstLoad();
-                        radius=400;
-                }
-        }
         if (name=="hotel de varenne")
         {
             lon = 2.3171;
@@ -617,17 +333,184 @@ $(document).ready(function () {
                         radius=400;
                     }
         }
+        if (name=="hotel de suede")
+        {
+            lon = 2.3193;
+            lat = 48.8526;
+                    var marker = new mapboxgl.Marker()
+                    .setLngLat([lon, lat])
+                    .addTo(map);
+                
+                if(stayofday==1){
+                    map.addLayer({
+                        'id': 'hsroutedayone',
+                        'type': 'line',
+                        'source': 'hsroutedayone',
+                        'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                        },
+                        'paint': {
+                        'line-color': '#FF0000',
+                        'line-width': 8
+                        }
+                        });
+                    firstLoad();
+                    radius=500;
+                    var img = document.createElement("img");
+ 
+                img.src = "images/h1d1.png";
+                img.width=800;
+                img.height=400;
+                //var src = document.getElementById("imageoutput");
+                //src.appendChild(img);
+                $.ajax({
+                    type: 'post',
+                    url: 'api/points/post',
+                    data: $('#formall').serialize(),
+                    success: function (response) {
+                        downloadData();
+                    }
+                })
+            
+                imgon = img;
+                var data = [{lon:2.3193, lat:48.8526},{lon:2.2945, lat:48.8584},{lon:2.2986,lat:48.8556},{lon:2.3125,lat:48.8544},{lon:2.3158,lat:48.8553}];
+
+                $.ajax({
+                    type: 'post',
+                    url: 'api/points/posts',
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf8",
+                    success: function (response) {
+                        //alert("success");
+                        distt=response;
+                    }
+                })
+
+                }
+
+                else if(stayofday==3){
+                    map.addLayer({
+                        'id': 'hsroutedaythree',
+                        'type': 'line',
+                        'source': 'hsroutedaythree',
+                        'layout': {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                        },
+                        'paint': {
+                        'line-color': '#00FF00',
+                        'line-width': 8
+                        }
+                        });
+                firstLoad();
+                radius=600;
+                var img = document.createElement("img");
+ 
+                img.src = "images/h1d3.png";
+                img.width=800;
+                img.height=400;
+                //var src = document.getElementById("imageoutput");
+                imgon=img;
+                //src.appendChild(img);
+                $.ajax({
+                    type: 'post',
+                    url: 'api/points/post',
+                    data: $('#formall').serialize(),
+                    success: function (response) {
+                        downloadData();
+                    }
+                })
+
+                
+                }
+                
+                else if(stayofday==2)
+                {
+                        map.addLayer({
+                            'id': 'hsroutedaytwo',
+                            'type': 'line',
+                            'source': 'hsroutedaytwo',
+                            'layout': {
+                            'line-join': 'round',
+                            'line-cap': 'round'
+                            },
+                            'paint': {
+                            'line-color': '#888',
+                            'line-width': 8
+                            }
+                            });
+                        firstLoad();
+                        radius=400;
+                        var img = document.createElement("img");
+ 
+                img.src = "images/h1d2.png";
+                img.width=800;
+                img.height=400;
+                //var src = document.getElementById("imageoutput");
+                //src.appendChild(img);
+                imgon=img;
+                $.ajax({
+                    type: 'post',
+                    url: 'api/points/post',
+                    data: $('#formall').serialize(),
+                    success: function (response) {
+                        downloadData();
+                    }
+                })
+                var data = [{lon:2.3193, lat:48.8526},{lon:2.3206, lat:48.8511},{lon:2.3350,lat:48.8523},{lon:2.3226,lat:48.8474},{lon:2.350,lat:48.8459},{lon:2.2945,lat:48.8584},{lon:2.2893,lat:48.8616},{lon:2.2851,lat:48.8592},{lon:2.2876,lat:48.8556}];
+
+                $.ajax({
+                    type: 'post',
+                    url: 'api/points/posts',
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf8",
+                    success: function (response) {
+                        //alert("success");
+                        //console.log(response);
+                       distt = response;
+                    }
+                })
+            }
+        }
+        
         //remove hotel layer
         map.setLayoutProperty('other_hotels', 'visibility', 'none');
         //map.setLayoutProperty('opentripmap.pois', 'visibility', 'none');
         
     }
+   
+    function downloadData() {
+        $.getJSON("/api/points/get/", function (data) {
+            displayData(data);
+        });
+    }
+
+    function displayData(data) {
+        data.forEach(element => {
+            console.log(element);
+            var divinhtml = document.getElementById("containerish");
+            var para = document.createElement("p"); 
+            var myImage = document.createElement("img");
+            var dayofstay = document.getElementById("durstay").value;
+            //var distancecalc = document.createElement("p");
+            //distancecov
+            para.textContent = "Traveller-Name: " + element.travellerName + ".  Recommended route to take for  " + dayofstay + "  days of stay. Approx. distance to cover:" + distt + " km";
+            myImage=imgon;
+            divinhtml.appendChild(para);
+            divinhtml.appendChild(myImage); 
+           
+            para.style.backgroundColor = "#add8e6";
+            paratwo.style.backgroundColor = "#b5651d";
+        });
+    }
+    
     let offset = 0; // offset from first object in the list
     let count;
     const pageLength = 5;
     function firstLoad() {
-        let staysofday =  document.getElementById("durstay").value;
-        let travname =  document.getElementById("travname").value;
+        let travbudg =  document.getElementById("travbudget").value;
+        let hotstay =  document.getElementById("hotelstaying").value;
         apiGet(
           "radius",
           `radius=${radius}&limit=${pageLength}&offset=${offset}&lon=${lon}&lat=${lat}&rate=2&format=count`
@@ -636,7 +519,7 @@ $(document).ready(function () {
           offset = 0;
           document.getElementById(
             "inform"
-          ).innerHTML += `<p>${count} attraction can be visited by ${travname} in ${staysofday} days in paris</p>`; //add br and write the form inputs
+          ).innerHTML += `<p style="color:white;background-color:black;"> Possible places to visit from hotel, '${hotstay}' within ${radius} km and with budget ${travbudg}€:</p>`; //add br and write the form inputs
           loadList();
         });
       }
@@ -659,12 +542,29 @@ $(document).ready(function () {
       }
       
       function createListItem(item) {
-        let a = document.createElement("a");
+        let travbudg =  document.getElementById("travbudget").value;
+        let a = document.createElement("DIV");
         a.className = "list-group-item list-group-item-action";
-        a.setAttribute("data-id", item.xid);
-        a.innerHTML = `<h5 class="list-group-item-heading">${item.name}</h5>
-                  <p class="list-group-item-text">${getCategoryName(item.kinds)}</p>`; //try .hotel
+        a.style.color = "#000000";
+        a.style.backgroundColor = "#FFFFFF";
+        a.setAttribute("data-id", item.xid); //budget
+        k=getCategoryName(item.kinds);
         
+        if(travbudg<160){
+        if(k=="Church" || k=="Temple" || k=="Park" || k=="Burial places" || k=="Art gallery" || k=="Monument")
+        {
+        a.innerHTML = `<h5 class="list-group-item-heading">${item.name} (Click Me to show details!)</h5>
+                  <p class="list-group-item-text" style="background-color:tomato; color:white;">${k}</p>`;
+        }
+        }   
+
+        if(travbudg>160){
+            if(k=="Church" || k=="Temple" || k=="Park" || k=="Burial places" || k=="Art gallery" || k=="Monument" || k=="National Museum, Art gallery" || k=="Fountain" || k==" Burial place, Monument" || k=="Tower" || k=="Museum")
+            {
+            a.innerHTML = `<h5 class="list-group-item-heading">${item.name} (Click Me to show details!)</h5>
+                      <p class="list-group-item-text" style="background-color:tomato; color:white;">${k}</p>`;
+            }
+            }   
         a.addEventListener("click", function() {
           document.querySelectorAll("#list a").forEach(function(item) {
             item.classList.remove("active");
@@ -672,19 +572,7 @@ $(document).ready(function () {
           this.classList.add("active");
           let xid = this.getAttribute("data-id");
           apiGet("xid/" + xid).then(data => onShowPOIt(data));
-        /*$.ajax({
-            type: "POST",
-            url: "api/points",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                console.log('point posted ' + response);
-                downloadPoints();
-            },
-            error: function(){
-                console.log('uhh ohh');
-            }
-        });*/
+       
         });
         return a;
       }
@@ -699,7 +587,7 @@ $(document).ready(function () {
           : data.info
           ? data.info.descr
           : "No description";
-  
+        poi.style.backgroundColor = "tomato";
         poi.innerHTML += `<p><a target="_blank" href="${data.otm}">Show more at OpenTripMap</a></p>`;
       }
       document

@@ -3,19 +3,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Points.Models;
 using Points.Data;
+using System;
 using System.Collections.Generic;
+//using Microsoft.AspNetCore.Http;
+//using System.Text.Encodings.Web;
+
 
 namespace Points.Controllers
 {
-    [Route("api/points")]
+    [Route("api/points/[action]")]
     [ApiController]
-    //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
     public class PointController : ControllerBase
     {
 
+        public static double distance;
         private static readonly object locker = new object();
         
         [HttpGet]
+        [ActionName("get")]
         public ActionResult<List<Point>> Get()
         {
             
@@ -23,9 +29,7 @@ namespace Points.Controllers
             {
                 try
                 {
-                    
                     return Ok(PointData.points);
-
                 }
                 catch (System.Exception)
                 {
@@ -36,30 +40,64 @@ namespace Points.Controllers
 
         }
 
+
         //private static int GeneratedID = 0;
-
-        [HttpPost]
-        public ActionResult Post(Point p)
+        public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
         {
-            //p.ID = GeneratedID++;
-            Point museumdulovre = new Point{ID=1,Lat=48.8566m, Lng=2.3522m, Info="This is Museuem Du Lovre"};
-            Point dorsemuse = new Point{ID=2,Lat=48.8600m, Lng=2.3266m, Info="This is Museuem Dorse"};
-            Point palaisgarnier = new Point{ID=3,Lat=48.8720m, Lng=2.3216m, Info="This is Palai garnier"};
-            lock (locker)
-            {
-
-                PointData.points.Add(p);
-                PointData.points.Add(museumdulovre);
-                PointData.points.Add(dorsemuse);
-                PointData.points.Add(palaisgarnier);
-                System.Console.WriteLine($"{p.ID} {p.Lat} {p.Lng}");
-                System.Console.WriteLine($"{museumdulovre.ID} {museumdulovre.Lat} {museumdulovre.Lng} {museumdulovre.Info}");
-                System.Console.WriteLine($"{dorsemuse.ID} {dorsemuse.Lat} {dorsemuse.Lng},{dorsemuse.Info}");
-                System.Console.WriteLine($"{palaisgarnier.ID} {palaisgarnier.Lat} {palaisgarnier.Lng},{palaisgarnier.Info}");
-                return Ok();
-            }
+            var d1 = latitude * (Math.PI / 180.0);
+            var num1 = longitude * (Math.PI / 180.0);
+            var d2 = otherLatitude * (Math.PI / 180.0);
+            var num2 = otherLongitude * (Math.PI / 180.0) - num1;
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+            
+            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)))/100000;
         }
 
+        [HttpPost]
+        [ActionName("posts")]
+       public ActionResult Posts(Coordinates[] p)
+        {
+            //p.ID = GeneratedID++;
+            double sum=0;
+            lock (locker)
+            {
+                //PointData.coordpoints.Add(p);
+                //System.Console.WriteLine($"{p.lon} {p.lat}");
+                foreach(var coord in p)
+                {
+                    System.Console.WriteLine($"{coord.lon},{coord.lat}");
+                    sum += GetDistance(coord.lon,coord.lat,coord.lon+1,coord.lat+1);
+                }
+                //return Ok(p);
+                distance = sum;
+                System.Console.WriteLine($"This is distance: {distance} km");
+                return Ok(distance);
+            }
+
+            
+        }
+        
+        
+        [HttpPost]
+        [ActionName("post")]
+        public IActionResult Post([FromForm] string travgivenname, [FromForm] int budgetgiven,[FromForm] int durofstaygiven)
+        {
+            Point p = new Point 
+            {
+                TravellerName=travgivenname,
+                BudgetGiven=budgetgiven,
+                DurOfStay=durofstaygiven,
+                Distancecov=distance
+            };
+            lock (locker)
+            {
+                PointData.points.Add(p);
+                System.Console.WriteLine($"{p.TravellerName} {p.BudgetGiven} {p.DurOfStay} {p.Distancecov}");
+            }
+
+            return NoContent();
+
+        }
 
     }
 }

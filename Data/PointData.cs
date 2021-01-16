@@ -7,5 +7,6 @@ namespace Points.Data
     static class PointData
     {
         public static List<Point> points = new List<Point>();
+        
     }    
 }
