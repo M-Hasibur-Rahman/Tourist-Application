@@ -24,7 +24,6 @@ namespace Points.Controllers
         [ActionName("get")]
         public ActionResult<List<Point>> Get()
         {
-            
             lock (locker)
             {
                 try
@@ -37,7 +36,6 @@ namespace Points.Controllers
                     throw;
                 }
             }
-
         }
 
 

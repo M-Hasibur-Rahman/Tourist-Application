@@ -70,15 +70,28 @@
             </div>
             <div class="inputfield">
                 <label>Hotel staying at: <img src="free-hotel-icon.png" alt="hotel" width="25" height="25"></label>
-                <input type="text" class="input" id="hotelstaying" required>
+                <!--<input type="text" class="input" id="hotelstaying" required>-->
+                <input list="hoteloptions" id="hotelstaying" name="hotelstayingchoices" class="input"/>
+                <datalist id="hoteloptions">
+                    <option value="Hotel de suede">
+                    <option value="Hotel de varenne">
+                    <option value="Hotel de ville">
+                    <option value="Hotel royal phare">
+                    </datalist>
             </div>
             <div class="inputfield">
                 <label>Budget (in €):</label>
-                <input type="text" class="input" id="travbudget" name="budgetgiven" required>
+                <input type="number" class="inputbudget" id="travbudget" name="budgetgiven" placeholder="minimum 162€" min="162" required><span class="validity"></span>
             </div>
             <div class="inputfield">
                 <label>Duration of stay (days):</label>
-                <input type="text" class="input" id="durstay" name="durofstaygiven" required>
+                <input list="durationofstayoption" class="input" id="durstay" name="durofstaygiven" required>
+                <datalist id="durationofstayoption">
+                    <option value="1">
+                    <option value="2">
+                    <option value="3">
+                    <option value="4">   
+                    </datalist>
             </div>
             <!--<div class="inputfield">
                 <label>Distance:</label>
@@ -96,11 +109,16 @@
             <div id="idmap"></div>
         </div>
     </section>
+    <section class="outputform">
+    <div class="informdiv">
         <div id="inform"></div>
         <div id="list"></div>
         <div id="pointer"></div>
-        <input type="button" id="next_button" value="next" />
-        <div id="containerish"></div>
+        <input type="button" id="next_button" value="Next" />
+    </div>
+        <div id="containerish">
+        </div>
+    </section>
     <script type="text/javascript" src="script.js"></script>
 
 </body>
