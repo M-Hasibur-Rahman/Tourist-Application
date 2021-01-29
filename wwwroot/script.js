@@ -1262,6 +1262,7 @@ $(document).ready(function () {
         });
     }
 
+    
     function displayData(data) {
         data.forEach(element => {
             console.log(element);
@@ -1269,16 +1270,34 @@ $(document).ready(function () {
             var para = document.createElement("p"); 
             var myImage = document.createElement("img");
             var dayofstay = document.getElementById("durstay").value;
+            //deletebut = document.getElementById("delete_button");
             //var distancecalc = document.createElement("p");
             //distancecov
             para.textContent = "Traveller-Name: " + element.travellerName + ". Recommended route to take for " + dayofstay + " days of stay. Approximate distance to cover: " + distt + " km";
             myImage=imgon;
+            //deletebut.innerHTML = "Delete Route";
             divinhtml.appendChild(para);
             divinhtml.appendChild(myImage); 
-           
+            //divinhtml.appendChild(deletebut);
             paratwo.style.backgroundColor = "#b5651d";
+            
         });
     }
+
+
+    document
+    .getElementById("delete_button").onclick = function() {
+        let menu = document.getElementById('containerish');
+        //menu.removeChild(menu.lastChild);
+        //menu.removeChild(menu.firstChild);
+        var child = menu.lastElementChild;  
+        var i=0;
+        while (i<2) { 
+            menu.removeChild(child); 
+            child = menu.lastElementChild; 
+            i=i+1;
+        } 
+}
     
     let offset = 0; // offset from first object in the list
     let count;

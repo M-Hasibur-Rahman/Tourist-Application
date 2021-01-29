@@ -234,6 +234,9 @@ div.webinfo h3 {
   font-size: 16px;
   color:#404040;
   letter-spacing: 1px;
+  border: 10px;
+  border-style: solid;
+  border-color: black;
 }
 
 #containerish img {
@@ -269,12 +272,29 @@ div.webinfo h3 {
     
  }
 
+ #delete_button {
+  width: 30%;
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-right: 5%;
+  border-radius:10px;
+  background:#ec4646;
+  outline: none;
+  border: none;
+  color: 	white;
+  font-size: 1rem;
+  align-items: center;
+  float:right;
+ }
+
  .outputform {
   width: 100%;
   height: 400vh;
   background:#EDF5E1;
   margin: auto;
   padding: 8px;
+
 }
 
 .informdiv {
@@ -282,6 +302,9 @@ div.webinfo h3 {
   height: 400vh;
   background: #942911;
   float: left;
+  border: 10px;
+  border-style: solid;
+  border-color: black;
 }
 
 
@@ -314,4 +337,13 @@ input:valid+span:after {
     background-color:white;
     color:black;
     font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  padding: 20px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  background-color:black;
+  color:white;
+  height: 30px;
 }
