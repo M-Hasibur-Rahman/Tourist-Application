@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj": {}
+    "c:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj": {
+    "c:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj",
+        "projectUniqueName": "c:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj",
         "projectName": "rest-lab",
-        "projectPath": "C:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj",
+        "projectPath": "c:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\rest-lab.csproj",
         "packagesPath": "C:\\Users\\Hasib\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\obj\\",
+        "outputPath": "c:\\Users\\Hasib\\Documents\\rest-service-lab\\restlab\\touristproj\\Tourist-Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
